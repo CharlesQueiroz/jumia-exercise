@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    database-platform: ${DATABASE_CLASS_DIALECT_NAME:com.jumia.exercise.config.SQLiteDialect}
+    hibernate:
+      ddl-auto: ${DATABASE_GENERATE_DDL:none}
+    show-sql: ${DATABASE_SHOW_SQL:false}
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:sqlite::resource:sample.db}
+    driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.sqlite.JDBC}
+    username: ${DATASOURCE_USER:admin}
+    password: ${DATASOURCE_PASSWORD:admin}
+  devtools:
+    add-properties: true
+logging:
+  level:
+    root: ${LOGGIN_LEVEL_ROOT:INFO}
+    com:
+      jumia: ${LOGGIN_LEVEL_COM_JUMIA:DEBUG}
