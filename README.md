@@ -40,21 +40,22 @@ Regular expressions to validate the numbers:
 
 ## Tech Stack
 
-The project use SpringBoot for core and others libs like:
+The project uses SpringBoot for core and other libs like:
 
-**Server:** SpringBoot, SpringData, RestAssured, Git, Lombok, maven, docker end Java 17
+**Server:** SpringBoot, SpringData, RestAssured, Git, Lombok, maven, docker and Java 17
 
 ## Installation
 
-For Run, you just need install the Java 17 JDK, docker, git and Maven 3.6.0+ and follow the steps:
+For Run, you just need to install the Java 17 JDK, docker, git and Maven 3.6.0+ and follow the steps:
 
 ### Installing Apache Maven
 
-The installation of Apache Maven is a simple process of extracting the archive and adding the bin folder with the mvn command to the PATH.
+The installation of Apache Maven is a simple process of extracting the archive and adding the bin folder with the `mvn` command to the `PATH`.
+> MacOS users with Homebrew installed can also use: `brew install maven`
 
 Detailed steps are:
 
-Have a JDK installation on your system. Either set the **JAVA_HOME** environment variable pointing to your JDK installation or have the java executable on your **PATH**.
+You must have a JDK installed on your system. Either set the `JAVA_HOME` environment variable pointing to your JDK installation or have the java executable on your `PATH`.
 
 Extract distribution archive in any directory
 
@@ -62,14 +63,14 @@ Extract distribution archive in any directory
   $ unzip apache-maven-3.8.4-bin.zip
 ```
 
-Add the **bin** directory of the created directory **apache-maven-3.8.4** to the **PATH** environment variable
+Add the `bin` directory of the created directory `apache-maven-3.8.4` to the `PATH` environment variable
 
-Confirm with **mvn -v** in a new shell. The result should look similar to:
+Confirm with `mvn -v` in a new shell. The result should look similar to:
 
 ```bash
-Running `/Users/charlesqueiroz/Documents/Projects/PERSONAL/exercise/mvnw`...
+Running `/Users/username/folder/mvnw`...
 Apache Maven 3.8.4 (9b656c72d54e5bacbed989b64718c159fe39b537)
-Maven home: /Users/charlesqueiroz/.m2/wrapper/dists/apache-maven-3.8.4-bin/52ccbt68d252mdldqsfsn03jlf/apache-maven-3.8.4
+Maven home: /Users/username/.m2/wrapper/dists/apache-maven-3.8.4-bin/52ccbt68d252mdldqsfsn03jlf/apache-maven-3.8.4
 Java version: 17.0.1, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk-17.0.1.jdk/Contents/Home
 Default locale: en_BR, platform encoding: UTF-8
 OS name: "mac os x", version: "12.1", arch: "x86_64", family: "mac"
@@ -77,33 +78,35 @@ OS name: "mac os x", version: "12.1", arch: "x86_64", family: "mac"
 
 ### Installing Docker
 
-To install docker on Windows, follow this link [Documentation](https://docs.docker.com/desktop/windows/install/)
+To install docker, follow the [Get Started](https://www.docker.com/get-started) steps.
 
 ## Running
 
 To run this project, you have two options:
 
-#### Run without docker:
+#### 1. Run without docker:
 
 ```bash
   $ cd [root directory]
   $ mvn spring-boot:run
 ```
 
-#### Run with docker:
+#### 2. Run with docker:
+
+2.1. Build docker image:
 
 ```bash
   $ cd [root directory]
   $ mvn spring-boot:build-image
 ```
 
-This process will build the docker image. To run execute:
+2.2. Then create and run the container:
 
 ```bash
   $ docker run -d --name exercise -p 8080:8080 exercise:1.0.0.Final
 ```
 
-If you want to run the application with differents values for some variables, you can use the **-e** option like:
+You can use `-e` option if you want to run the application with different values for some environment variables, e.g.:
 
 ```bash
   $ docker run -d --name exercise -p 8080:8080 -e LOGGIN_LEVEL_COM_JUMIA=INFO -e LOGGIN_LEVEL_ROOT=ERROR exercise:1.0.0.Final
@@ -111,7 +114,7 @@ If you want to run the application with differents values for some variables, yo
 
 ## Running Tests
 
-To run tests, you can use the **mvn test** command.
+To run tests, you can use the `mvn test` command.
 
 ```bash
   mvn test
@@ -123,18 +126,61 @@ The result should look similar to:
 
 ## CURL Exemples (Optional)
 
-The API has some parameters like: 
+The API has some parameters like:
 
-| Name    | Type    | Description                        | Default Value | Possible Values |
-|---------|---------|------------------------------------|--------------- |-----------------|
-| page    | Integer | Current page to return             | 0
-| size    | Integer | Size of elements in a page         | 10
-| status  | Text    | The status of phone number         | |VALID, INVALID|
-| country | Text    | The country name of a phone number | |CAMEROON, ETHIOPIA, MOROCCO, MOZAMBIQUE, UGANDA|
+<table>
+    <thead>
+        <tr>
+            <th>Param</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Possible Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>page</th>
+            <th>Integer</th>
+            <th>Current page to return (default: 0)</th>
+            <th>any integer</th>
+        </tr>
+        <tr>
+            <th>size</th>
+            <th>Integer</th>
+            <th>Number of elements on a page (default: 10)</th>
+            <th>any integer</th>
+        </tr>
+        <tr>
+            <th rowspan=2>status</th>
+            <th rowspan=2>Text</th>
+            <th rowspan=2>The status of phone number</th>
+            <th>VALID</th>
+        </tr>
+        <tr>
+            <th>INVALID</th>
+        </tr>
+        <tr>
+            <th rowspan=5>country</th>
+            <th rowspan=5>Text</th>
+            <th rowspan=5>The country name of a phone number</th>
+            <th>CAMEROON</th>
+        </tr>
+        <tr>
+            <th>ETHIOPIA</th>
+        </tr>
+        <tr>
+            <th>MOROCCO</th>
+        </tr>
+        <tr>
+            <th>MOZAMBIQUE</th>
+        </tr>
+        <tr>
+            <th>UGANDA</th>
+        </tr>
+    </tbody>
+</table>
 
-
-
-To test, you can use the **curl** commands:
+To test, you can use the `curl` commands:
 
 ```bash
   curl -X GET http://localhost:8080/api/v1/customers/phones
