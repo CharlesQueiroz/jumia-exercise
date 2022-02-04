@@ -1,7 +1,7 @@
 package com.jumia.exercise.vo;
 
 import com.jumia.exercise.model.Country;
-import com.jumia.exercise.model.PhoneState;
+import com.jumia.exercise.model.PhoneStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ public class PhoneNumber {
     @NotNull
     private String number;
     private Country country;
-    private PhoneState state;
+    private PhoneStatus status;
 
     @NotNull
     private String countryCode;

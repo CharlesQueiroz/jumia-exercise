@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.jumia.exercise.model.Country.*;
-import static com.jumia.exercise.model.PhoneState.*;
+import static com.jumia.exercise.model.PhoneStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest

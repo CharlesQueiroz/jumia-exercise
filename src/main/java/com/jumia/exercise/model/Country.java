@@ -2,8 +2,8 @@ package com.jumia.exercise.model;
 
 import lombok.Getter;
 
-import static com.jumia.exercise.model.PhoneState.INVALID;
-import static com.jumia.exercise.model.PhoneState.VALID;
+import static com.jumia.exercise.model.PhoneStatus.INVALID;
+import static com.jumia.exercise.model.PhoneStatus.VALID;
 import static java.util.Arrays.stream;
 import static java.util.Optional.ofNullable;
 import static java.util.regex.Pattern.compile;
@@ -32,7 +32,7 @@ public enum Country {
                 .orElse(NONE);
     }
 
-    public PhoneState isValid(String phoneNumber) {
+    public PhoneStatus isValid(String phoneNumber) {
         return compile(this.getPattern())
                 .matcher(ofNullable(phoneNumber).orElse(""))
                 .matches() ? VALID : INVALID;

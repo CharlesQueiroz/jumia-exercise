@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.jumia.exercise.model.Country.MOROCCO;
 import static com.jumia.exercise.model.Country.MOZAMBIQUE;
-import static com.jumia.exercise.model.PhoneState.VALID;
+import static com.jumia.exercise.model.PhoneStatus.VALID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -33,7 +33,7 @@ class PhoneNumberConverterTest {
                 .countryCode("258")
                 .country(MOZAMBIQUE)
                 .number("823747618")
-                .state(VALID)
+                .status(VALID)
                 .build();
         assertEquals(phoneNumber, new PhoneNumberConverter().convertToEntityAttribute("(258) 823747618"));
     }

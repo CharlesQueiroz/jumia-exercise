@@ -3,9 +3,10 @@
 Project to solve an interview question described below.
 
 ## The Problem
+
 ---
 
-![](problem.png)
+![](assets/problem.png)
 
 Create a backend application in Java (*Frameworks allowed*) that uses the provided database (*SQLite 3*) to list and categorize country phone numbers. Phone numbers should be categorized by country, state (valid or not valid), country code and number.
 
@@ -118,15 +119,27 @@ To run tests, you can use the **mvn test** command.
 
 The result should look similar to:
 
-![](testresult.png)
+![](assets/testresult.png)
 
 ## CURL Exemples (Optional)
+
+The API has some parameters like: 
+
+| Name    | Type    | Description                        | Default Value | Possible Values |
+|---------|---------|------------------------------------|--------------- |-----------------|
+| page    | Integer | Current page to return             | 0
+| size    | Integer | Size of elements in a page         | 10
+| status  | Text    | The status of phone number         | |VALID, INVALID|
+| country | Text    | The country name of a phone number | |CAMEROON, ETHIOPIA, MOROCCO, MOZAMBIQUE, UGANDA|
+
+
 
 To test, you can use the **curl** commands:
 
 ```bash
   curl -X GET http://localhost:8080/api/v1/customers/phones
   curl -X GET http://localhost:8080/api/v1/customers/phones?country=CAMEROON
-  crul -X GET http://localhost:8080/api/v1/customers/phones?country=CAMEROON&state=VALID
-  curl -X GET http://localhost:8080/api/v1/customers/phones?size=2&page=1&country=CAMEROON
+  curl -X GET http://localhost:8080/api/v1/customers/phones?country=CAMEROON&status=VALID
+  curl -X GET http://localhost:8080/api/v1/customers/phones?size=2&page=0&country=CAMEROON
+  curl -X GET http://localhost:8080/api/v1/customers/phones?size=2&page=0&status=VALID&country=CAMEROON
 ```

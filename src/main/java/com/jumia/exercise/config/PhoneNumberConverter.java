@@ -34,7 +34,7 @@ public class PhoneNumberConverter implements AttributeConverter<PhoneNumber, Str
                     .country(country)
                     .countryCode(countryCode)
                     .number(dbData.substring(6))
-                    .state(country.isValid(dbData))
+                    .status(country.isValid(dbData))
                     .build();
         }
 

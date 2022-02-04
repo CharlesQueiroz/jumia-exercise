@@ -1,7 +1,7 @@
 package com.jumia.exercise.api.controller;
 
 import com.jumia.exercise.model.Country;
-import com.jumia.exercise.model.PhoneState;
+import com.jumia.exercise.model.PhoneStatus;
 import com.jumia.exercise.service.CustomerService;
 import com.jumia.exercise.vo.CustomPage;
 import lombok.AllArgsConstructor;
@@ -20,9 +20,9 @@ public class CustomerController {
     private CustomerService service;
 
     @GetMapping(value = "phones")
-    public CustomPage getAllPhoneNumbers(Country country, PhoneState state, Pageable pageable) {
+    public CustomPage getAllPhoneNumbers(Country country, PhoneStatus status, Pageable pageable) {
         log.info("RETURNING ALL PHONE NUMBERS");
-        var allPhoneNumbers = service.getAllPhoneNumbers(country, state, pageable);
+        var allPhoneNumbers = service.getAllPhoneNumbers(country, status, pageable);
         log.debug("RETURNING {} PHONE(S) NUMBER(S)", allPhoneNumbers.getSize());
         return allPhoneNumbers;
     }

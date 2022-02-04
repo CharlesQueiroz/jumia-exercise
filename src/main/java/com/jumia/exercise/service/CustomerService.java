@@ -1,7 +1,7 @@
 package com.jumia.exercise.service;
 
 import com.jumia.exercise.model.Country;
-import com.jumia.exercise.model.PhoneState;
+import com.jumia.exercise.model.PhoneStatus;
 import com.jumia.exercise.repository.CustomerRepository;
 import com.jumia.exercise.vo.CustomPage;
 import lombok.AllArgsConstructor;
@@ -18,11 +18,11 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public CustomPage getAllPhoneNumbers(Country country, PhoneState state, Pageable paging) {
-        log.info("GETTING ALL PHONE NUMBERS FOR COUNTRY: {}, STATE: {}", country, state);
+    public CustomPage getAllPhoneNumbers(Country country, PhoneStatus status, Pageable paging) {
+        log.info("GETTING ALL PHONE NUMBERS FOR COUNTRY: {}, STATE: {}", country, status);
 
         var allPhoneNumbers = customerRepository.findAllPhoneNumbers()
-                .filter(p -> state == null || p.getState() == state)
+                .filter(p -> status == null || p.getStatus() == status)
                 .filter(p -> country == null || p.getCountry() == country)
                 .skip((long) paging.getPageNumber() * paging.getPageSize())
                 .limit(paging.getPageSize())

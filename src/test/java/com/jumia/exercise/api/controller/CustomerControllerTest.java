@@ -14,8 +14,8 @@ import javax.annotation.PostConstruct;
 import java.util.stream.Collectors;
 
 import static com.jumia.exercise.model.Country.*;
-import static com.jumia.exercise.model.PhoneState.INVALID;
-import static com.jumia.exercise.model.PhoneState.VALID;
+import static com.jumia.exercise.model.PhoneStatus.INVALID;
+import static com.jumia.exercise.model.PhoneStatus.VALID;
 import static io.restassured.RestAssured.get;
 import static java.util.stream.Stream.of;
 import static org.hamcrest.Matchers.is;
@@ -41,16 +41,16 @@ class CustomerControllerTest {
 
     @Test
     void should_return_all_phone_numbers() {
-        var phone01 = PhoneNumber.builder().number("6546545369").state(VALID).countryCode("212").country(MOROCCO).build();
-        var phone02 = PhoneNumber.builder().number("6007989253").state(INVALID).countryCode("212").country(MOROCCO).build();
-        var phone03 = PhoneNumber.builder().number("847651504").state(VALID).countryCode("258").country(MOZAMBIQUE).build();
-        var phone04 = PhoneNumber.builder().number("846565883").state(INVALID).countryCode("258").country(MOZAMBIQUE).build();
-        var phone05 = PhoneNumber.builder().number("7503O6263").state(VALID).countryCode("256").country(UGANDA).build();
-        var phone06 = PhoneNumber.builder().number("704244430").state(INVALID).countryCode("256").country(UGANDA).build();
-        var phone07 = PhoneNumber.builder().number("914701723").state(VALID).countryCode("251").country(ETHIOPIA).build();
-        var phone08 = PhoneNumber.builder().number("911203317").state(INVALID).countryCode("251").country(ETHIOPIA).build();
-        var phone09 = PhoneNumber.builder().number("6780009592").state(VALID).countryCode("237").country(CAMEROON).build();
-        var phone10 = PhoneNumber.builder().number("6622284920").state(INVALID).countryCode("237").country(CAMEROON).build();
+        var phone01 = PhoneNumber.builder().number("6546545369").status(VALID).countryCode("212").country(MOROCCO).build();
+        var phone02 = PhoneNumber.builder().number("6007989253").status(INVALID).countryCode("212").country(MOROCCO).build();
+        var phone03 = PhoneNumber.builder().number("847651504").status(VALID).countryCode("258").country(MOZAMBIQUE).build();
+        var phone04 = PhoneNumber.builder().number("846565883").status(INVALID).countryCode("258").country(MOZAMBIQUE).build();
+        var phone05 = PhoneNumber.builder().number("7503O6263").status(VALID).countryCode("256").country(UGANDA).build();
+        var phone06 = PhoneNumber.builder().number("704244430").status(INVALID).countryCode("256").country(UGANDA).build();
+        var phone07 = PhoneNumber.builder().number("914701723").status(VALID).countryCode("251").country(ETHIOPIA).build();
+        var phone08 = PhoneNumber.builder().number("911203317").status(INVALID).countryCode("251").country(ETHIOPIA).build();
+        var phone09 = PhoneNumber.builder().number("6780009592").status(VALID).countryCode("237").country(CAMEROON).build();
+        var phone10 = PhoneNumber.builder().number("6622284920").status(INVALID).countryCode("237").country(CAMEROON).build();
 
         var phones = of(phone01, phone02, phone03, phone04, phone05, phone06, phone07, phone08, phone09, phone10).toList();
         var returned = CustomPage.builder().page(0).size(10).content(phones).build();
@@ -74,8 +74,8 @@ class CustomerControllerTest {
 
     @Test
     void should_return_all_filtered_phone_numbers_by_a_valid_country() {
-        var phone01 = PhoneNumber.builder().number("6546545369").state(VALID).countryCode("212").country(MOROCCO).build();
-        var phone02 = PhoneNumber.builder().number("6007989253").state(INVALID).countryCode("212").country(MOROCCO).build();
+        var phone01 = PhoneNumber.builder().number("6546545369").status(VALID).countryCode("212").country(MOROCCO).build();
+        var phone02 = PhoneNumber.builder().number("6007989253").status(INVALID).countryCode("212").country(MOROCCO).build();
 
         var phones = of(phone01, phone02).toList();
         var returned = CustomPage.builder().page(0).size(10).content(phones).build();
@@ -98,16 +98,16 @@ class CustomerControllerTest {
     }
 
     @Test
-    void should_return_all_filtered_phone_numbers_by_a_valid_state() {
-        var phone01 = PhoneNumber.builder().number("6546545369").state(VALID).countryCode("212").country(MOROCCO).build();
-        var phone03 = PhoneNumber.builder().number("847651504").state(VALID).countryCode("258").country(MOZAMBIQUE).build();
+    void should_return_all_filtered_phone_numbers_by_a_valid_status() {
+        var phone01 = PhoneNumber.builder().number("6546545369").status(VALID).countryCode("212").country(MOROCCO).build();
+        var phone03 = PhoneNumber.builder().number("847651504").status(VALID).countryCode("258").country(MOZAMBIQUE).build();
 
         var phones = of(phone01, phone03).toList();
         var returned = CustomPage.builder().page(0).size(10).content(phones).build();
 
         when(customerService.getAllPhoneNumbers(null, VALID, Pageable.ofSize(10))).thenReturn(returned);
 
-        String stateAsString = get(uri + "/api/v1/customers/phones?state=VALID&page=0&size=10").then()
+        String statusAsString = get(uri + "/api/v1/customers/phones?status=VALID&page=0&size=10").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .body("content.size()", is(2))
@@ -116,9 +116,9 @@ class CustomerControllerTest {
                 .jsonPath()
                 .getList("content", PhoneNumber.class)
                 .stream()
-                .map(i -> i.getState().name())
+                .map(i -> i.getStatus().name())
                 .collect(Collectors.joining(","));
 
-        assertEquals("VALID,VALID", stateAsString);
+        assertEquals("VALID,VALID", statusAsString);
     }
 }
